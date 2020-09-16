@@ -1,0 +1,809 @@
+openapi: "3.0.0"
+info:
+  title: "Inpost Mobile"
+  description: "Extracted from retrofit"
+  version: "1.0.0"
+servers:
+  - url: "https://api-inmobile-pl.easypack24.net"
+paths:
+  "/v2/agreement":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "AgreementApi.agreement"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AgreementGrant"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.agreement.AgreementApi"
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "AgreementApi.agreement"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/AgreementGrant"
+          description: "Response body type was declared as `Single<List<AgreementGrant>>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.agreement.AgreementApi"
+  "/v1/notifications/read/{notificationId}":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "NotificationCenterApi.markAsRead"
+      parameters:
+      - name: "notificationId"
+        in: "path"
+        description: "NotificationCenterApi.markAsRead.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationData"
+          description: "Response body type was declared as `Single<NotificationData>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.notificationcenter.NotificationCenterApi"
+  "/v1/notifications/readAll":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "NotificationCenterApi.markAsReadAll"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationData"
+          description: "Response body type was declared as `Single<NotificationData>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "string"
+              format: "date-time"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.notificationcenter.NotificationCenterApi"
+  "/v1/notifications":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "NotificationCenterApi.news"
+      parameters:
+      - name: "from"
+        in: "query"
+        description: "NotificationCenterApi.news.str"
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationResponse"
+          description: "Response body type was declared as `Single<NotificationResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.notificationcenter.NotificationCenterApi"
+  "/v1/logout":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "UserApi.logout"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.user.UserApi"
+  "/v1/parcel/{shipmentNumber}":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "ParcelApi.oneParcel"
+      parameters:
+      - name: "shipmentNumber"
+        in: "path"
+        description: "ParcelApi.oneParcel.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Parcel"
+          description: "Response body type was declared as `Single<Parcel>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.parcel.ParcelApi"
+  "/v1/parcel":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "ParcelApi.parcelsWithDate"
+      parameters:
+      - name: "updatedAfter"
+        in: "query"
+        description: "ParcelApi.parcelsWithDate.str"
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Parcel"
+          description: "Response body type was declared as `Single<List<Parcel>>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.parcel.ParcelApi"
+  "/v1/parcels":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "ParcelApi.parcels"
+      parameters:
+      - name: "shipmentNumbers"
+        in: "query"
+        description: "ParcelApi.parcels.str"
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Parcel"
+          description: "Response body type was declared as `Single<List<Parcel>>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.parcel.ParcelApi"
+  "/v1/observedParcel/{shipmentNumber}":
+    "delete":
+      security:
+        - bearerAuth: []
+      summary: "ParcelApi.removeObservedParcel"
+      parameters:
+      - name: "shipmentNumber"
+        in: "path"
+        description: "ParcelApi.removeObservedParcel.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.parcel.ParcelApi"
+  "/v1/observedParcel":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "ParcelApi.subscribeParcel"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SubscribeRequest"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.parcel.ParcelApi"
+  "/v2/setPushId":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CloudMessagingApi.setPushId"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PushIdBody"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.fcm.CloudMessagingApi"
+  "/v1/confirmSMSCode/{phoneNumber}/{smsCode}":
+    "post":
+      summary: "RegistrationApi.confirmSMSCode"
+      parameters:
+      - name: "phoneNumber"
+        in: "path"
+        description: "RegistrationApi.confirmSMSCode.str"
+        required: true
+        schema:
+          type: "string"
+      - name: "smsCode"
+        in: "path"
+        description: "RegistrationApi.confirmSMSCode.str2"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConfirmSMSResponse"
+          description: "Response body type was declared as `Single<ConfirmSMSResponse>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PhoneOSRequest"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.registration.RegistrationApi"
+  "/v1/authenticate":
+    "post":
+      summary: "RegistrationApi.refreshToken"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RefreshTokenResponse"
+          description: "Response body type was declared as `Single<RefreshTokenResponse>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthenticateRequest"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.registration.RegistrationApi"
+  "/v1/sendSMSCode/{phoneNumber}":
+    "get":
+      summary: "RegistrationApi.sendSMSCode"
+      parameters:
+      - name: "phoneNumber"
+        in: "path"
+        description: "RegistrationApi.sendSMSCode.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.registration.RegistrationApi"
+  "/v1/collect/compartment/status/{sessionUuid}":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentStatusApi.statusCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentStatusApi.statusCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      - name: "expected"
+        in: "query"
+        description: "CompartmentStatusApi.statusCompartment.str2"
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentStatusResponse"
+          description: "Response body type was declared as `Single<CompartmentStatusResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentStatusApi"
+  "/v2/collect/compartment/claim/{sessionUuid}":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.claimCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentApi.claimCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentClaimResponse"
+          description: "Response body type was declared as `Single<CompartmentClaimResponse>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CompartmentClaimRequest"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/collect/compartment/close/{sessionUuid}":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.closeCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentApi.closeCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentCloseResponse"
+          description: "Response body type was declared as `Single<CompartmentCloseResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/collect/compartment/open/{sessionUuid}":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.openCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentApi.openCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentOpenResponse"
+          description: "Response body type was declared as `Single<CompartmentOpenResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/collect/compartment/reopen/{sessionUuid}":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.reopenCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentApi.reopenCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentOpenResponse"
+          description: "Response body type was declared as `Single<CompartmentOpenResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/collect/terminate/{sessionUuid}":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.terminateCompartment"
+      parameters:
+      - name: "sessionUuid"
+        in: "path"
+        description: "CompartmentApi.terminateCompartment.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Completable"
+          description: "Response body type was declared as `Completable`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/collect/validate":
+    "post":
+      security:
+        - bearerAuth: []
+      summary: "CompartmentApi.validateCompartment"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompartmentValidateResponse"
+          description: "Response body type was declared as `Single<CompartmentValidateResponse>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidationRequest"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.comaprtment.CompartmentApi"
+  "/v1/points":
+    "get":
+      security:
+        - bearerAuth: []
+      summary: "MapApi.pointsFor"
+      parameters:
+      - name: "relative_point"
+        in: "query"
+        description: "MapApi.pointsFor.str"
+        schema:
+          type: "string"
+      - name: "max_distance"
+        in: "query"
+        description: "MapApi.pointsFor.d"
+        schema:
+          type: "number"
+      - name: "fields"
+        in: "query"
+        description: "MapApi.pointsFor.str2"
+        schema:
+          type: "string"
+      - name: "sort_by"
+        in: "query"
+        description: "MapApi.pointsFor.str3"
+        schema:
+          type: "string"
+      - name: "sort_order"
+        in: "query"
+        description: "MapApi.pointsFor.str4"
+        schema:
+          type: "string"
+      - name: "per_page"
+        in: "query"
+        description: "MapApi.pointsFor.i"
+        schema:
+          type: "integer"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DeliveryPointsResponse"
+          description: "Response body type was declared as `Single<DeliveryPointsResponse>`"
+
+      x-retrofit-interface: "p024pl.inpost.inmobile.network.map.MapApi"
+components:
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+  schemas:
+    "AgreementGrant":
+      type: "object"
+      properties:
+        "agreementType":
+          type: "string"
+        "email":
+          type: "string"
+        "status":
+          type: "string"
+    "Completable":
+      type: "object"
+    "NotificationData":
+      type: "object"
+      properties:
+        "content":
+          type: "string"
+        "date":
+          type: "string"
+          format: "date-time"
+        "f35560id":
+          type: "string"
+        "imageUrl":
+          type: "string"
+        "parcelCount":
+          type: "integer"
+        "read":
+          type: "boolean"
+        "sender":
+          type: "string"
+        "shipmentNumber":
+          type: "string"
+        "title":
+          type: "string"
+        "type":
+          type: "string"
+    "NotificationResponse":
+      type: "object"
+      properties:
+        "notifications":
+          type: "array"
+          items:
+            $ref: "#/components/schemas/NotificationData"
+    "Parcel":
+      type: "object"
+      properties:
+        "cashOnDelivery":
+          $ref: "#/components/schemas/CashOnDelivery"
+        "endOfWeekCollection":
+          type: "boolean"
+        "expiryDate":
+          type: "string"
+          format: "date-time"
+        "isMobileCollectPossible":
+          type: "boolean"
+        "isObserved":
+          type: "boolean"
+        "multiCompartment":
+          $ref: "#/components/schemas/MultiCompartment"
+        "openCode":
+          type: "string"
+        "phoneNumber":
+          type: "string"
+        "pickupDate":
+          type: "string"
+          format: "date-time"
+        "pickupPoint":
+          $ref: "#/components/schemas/DeliveryPointData"
+        "qrCode":
+          type: "string"
+        "returnedToSenderDate":
+          type: "string"
+          format: "date-time"
+        "senderName":
+          type: "string"
+        "shipmentNumber":
+          type: "string"
+        "shipmentType":
+          type: "string"
+        "status":
+          type: "string"
+        "statusHistory":
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ParcelHistory"
+        "storedDate":
+          type: "string"
+          format: "date-time"
+    "SubscribeRequest":
+      type: "object"
+      properties:
+        "shipmentNumber":
+          type: "string"
+    "PushIdBody":
+      type: "object"
+      properties:
+        "pushId":
+          type: "string"
+        "refreshToken":
+          type: "string"
+    "PhoneOSRequest":
+      type: "object"
+      properties:
+        "phoneOS":
+          type: "string"
+    "ConfirmSMSResponse":
+      type: "object"
+      properties:
+        "authToken":
+          type: "string"
+        "refreshToken":
+          type: "string"
+    "AuthenticateRequest":
+      type: "object"
+      properties:
+        "phoneOS":
+          type: "string"
+        "refreshToken":
+          type: "string"
+    "RefreshTokenResponse":
+      type: "object"
+      properties:
+        "authToken":
+          type: "string"
+    "CompartmentStatusResponse":
+      type: "object"
+      properties:
+        "compartment":
+          $ref: "#/components/schemas/Compartment"
+        "status":
+          type: "string"
+    "CompartmentClaimRequest":
+      type: "object"
+      properties:
+        "shipmentNumbers":
+          type: "array"
+          items:
+            type: "string"
+    "CompartmentClaimResponse":
+      type: "object"
+      properties:
+        "actionTime":
+          type: "integer"
+        "confirmActionTime":
+          type: "integer"
+        "openCompartmentWaitingTime":
+          type: "integer"
+    "CompartmentCloseResponse":
+      type: "object"
+      properties:
+        "closed":
+          type: "boolean"
+    "CompartmentOpenResponse":
+      type: "object"
+      properties:
+        "actionTime":
+          type: "integer"
+        "compartment":
+          $ref: "#/components/schemas/Compartment"
+        "confirmActionTime":
+          type: "integer"
+        "openCompartmentWaitingTime":
+          type: "integer"
+    "ValidationRequest":
+      type: "object"
+      properties:
+        "geoPoint":
+          $ref: "#/components/schemas/GeoPoint"
+        "parcel":
+          $ref: "#/components/schemas/ParcelCompartment"
+    "CompartmentValidateResponse":
+      type: "object"
+      properties:
+        "sessionExpirationTime":
+          type: "integer"
+        "sessionUuid":
+          type: "string"
+    "DeliveryPointsResponse":
+      type: "object"
+      properties:
+        "items":
+          type: "array"
+          items:
+            $ref: "#/components/schemas/DeliveryPointData"
+    "CashOnDelivery":
+      type: "object"
+      properties:
+        "paid":
+          type: "boolean"
+        "payCode":
+          type: "string"
+        "price":
+          type: "string"
+        "url":
+          type: "string"
+    "MultiCompartment":
+      type: "object"
+      properties:
+        "collected":
+          type: "boolean"
+        "presentation":
+          type: "boolean"
+        "shipmentNumbers":
+          type: "array"
+          items:
+            type: "string"
+        "uuid":
+          type: "string"
+    "DeliveryPointData":
+      type: "object"
+      properties:
+        "addressDetails":
+          $ref: "#/components/schemas/AddressDetails"
+        "location":
+          $ref: "#/components/schemas/PointLocation"
+        "location247":
+          type: "boolean"
+        "locationDescription":
+          type: "string"
+        "name":
+          type: "string"
+        "openingHours":
+          type: "string"
+        "paymentType":
+          type: "object"
+          additionalProperties:
+            type: "string"
+        "status":
+          type: "string"
+        "type":
+          type: "array"
+          items:
+            type: "string"
+        "virtual":
+          type: "integer"
+    "ParcelHistory":
+      type: "object"
+      properties:
+        "date":
+          type: "string"
+          format: "date-time"
+        "status":
+          type: "string"
+    "Compartment":
+      type: "object"
+      properties:
+        "location":
+          $ref: "#/components/schemas/Location"
+        "name":
+          type: "string"
+    "GeoPoint":
+      type: "object"
+      properties:
+        "accuracy":
+          type: "number"
+        "latitude":
+          type: "number"
+        "longitude":
+          type: "number"
+    "ParcelCompartment":
+      type: "object"
+      properties:
+        "openCode":
+          type: "string"
+        "shipmentNumber":
+          type: "string"
+    "AddressDetails":
+      type: "object"
+      properties:
+        "buildingNumber":
+          type: "string"
+        "city":
+          type: "string"
+        "flatNumber":
+          type: "string"
+        "postCode":
+          type: "string"
+        "province":
+          type: "string"
+        "street":
+          type: "string"
+    "PointLocation":
+      type: "object"
+      properties:
+        "latitude":
+          type: "number"
+        "longitude":
+          type: "number"
+    "Location":
+      type: "object"
+      properties:
+        "column":
+          type: "integer"
+        "row":
+          type: "integer"
+        "side":
+          type: "string"

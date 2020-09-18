@@ -27,12 +27,6 @@ jobs:
       - name: Build for armv7 linux
         run: |
           GOOS=linux GOARCH=arm go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_linux_armv7 .
-      - name: Build for arm64 android
-        run: |
-          GOOS=android GOARCH=arm64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_android_arm64 .
-      - name: Build for armv7 linux
-        run: |
-          GOOS=linux GOARCH=arm go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_linux_armv7 .
       - name: Build for macOS
         run: |
           GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_macos .

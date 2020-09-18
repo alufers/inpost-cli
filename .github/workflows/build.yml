@@ -1,11 +1,8 @@
 # workflow name
-name: Generate release-artifacts
+name: Build
 
 # on events
-on:
-  release:
-    types: 
-        - created
+on: [push]
 
 # workflow tasks
 jobs:
@@ -15,11 +12,22 @@ jobs:
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v2
-      - name: Generate build files
-        uses: thatisuday/go-cross-build@v1
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      - name: Create build directory
+        run: |
+          mkdir -p build 
+      - name: Build for x86_64 linux
+        run: |
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_linux_x86_64 .
+      - name: Build for x86_64 windows
+        run: |
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_windows_x86_64.exe .
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-            platforms: 'linux/amd64, darwin/amd64, windows/amd64, linux/arm, linux/arm64, android/arm, android/arm64'
-            package: ''
-            name: 'inpost-cli'
-            compress: 'true'
-            dest: 'dist'
+          files: build/**
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

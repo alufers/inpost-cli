@@ -80,6 +80,7 @@ func main() {
 	app := &cli.App{
 		Usage:       "A CLI utility replacing the InPost app",
 		Description: "This utility allows you to list your packages, generate QR codes in the terminal to collect them and remotely open compartments. \n   Warning: There is no limit to how far away you can open the compartments from. Use with caution as you can get your package stolen this way.",
+		Version:     InpostCliVersion,
 		Commands: []*cli.Command{
 			LoginCmd,
 			ListParcelsCmd,

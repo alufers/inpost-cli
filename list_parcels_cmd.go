@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"regexp"
 	"time"
 
 	"github.com/alufers/inpost-cli/swagger"
@@ -68,8 +67,14 @@ var ListParcelsCmd = &cli.Command{
 				}
 				expiryTime := ""
 				if !v.ExpiryDate.IsZero() {
-					expiryTime = v.ExpiryDate.Sub(time.Now()).String()
-					expiryTime = regexp.MustCompile("[0-9\\.]*s$").ReplaceAllString(expiryTime, "")
+					expiryTime = formatDuration(v.ExpiryDate.Sub(time.Now()))
+				}
+				timeSinceStatus := ""
+				for _, s := range v.StatusHistory {
+					if s.Status == v.Status {
+						timeSinceStatus = formatDuration(time.Now().Sub(s.Date)) + " ago"
+						break
+					}
 				}
 				var colors []tablewriter.Colors
 				if v.Status == "delivered" {
@@ -98,7 +103,7 @@ var ListParcelsCmd = &cli.Command{
 						colors = append(colors, tablewriter.Colors{tablewriter.FgHiYellowColor})
 					}
 				}
-				table.Rich([]string{v.ShipmentNumber, v.SenderName, v.Status, pickupPoint, pickupCity, v.OpenCode, expiryTime}, colors)
+				table.Rich([]string{v.ShipmentNumber, v.SenderName, v.Status + prependSpaceIfNotEmpty(timeSinceStatus), pickupPoint, pickupCity, v.OpenCode, expiryTime}, colors)
 			}
 			table.Render()
 		case "json":

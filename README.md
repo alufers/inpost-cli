@@ -17,6 +17,8 @@ This project was developed solely by me and is not affiliated with InPost in any
 
 ## Installation
 
+Prebuilt binaries are available for download [at the releases page](https://github.com/alufers/inpost-cli/releases/latest). Linux (arm, arm64, and x64), macOS and windows are supported.
+
 If you have Go installed on your system, you can compile and install `inpost-cli` this way:
 
 ```bash

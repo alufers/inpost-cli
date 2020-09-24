@@ -3,7 +3,10 @@ package main
 import (
 	"context"
 	"fmt"
+	"math"
 	"strings"
+
+	"time"
 
 	"github.com/alufers/inpost-cli/swagger"
 	"github.com/antihax/optional"
@@ -52,4 +55,37 @@ func resolveShipmentNumber(ctx context.Context, apiClient *swagger.APIClient, pa
 		return "", fmt.Errorf(msg, passedNumber)
 	}
 	return matchingPackages[0].ShipmentNumber, nil
+}
+
+// formatDuration formats a duration without the seconds
+func formatDuration(d time.Duration) string {
+	var format string
+	seconds := math.Floor(d.Seconds())
+
+	days := math.Floor(seconds / (60 * 60 * 24))
+
+	if days > 0 {
+		format += fmt.Sprintf("%vd ", days)
+		seconds -= days * 60 * 60 * 24
+	}
+
+	hours := math.Floor(seconds / (60 * 60))
+
+	if hours > 0 {
+		format += fmt.Sprintf("%vh ", hours)
+		seconds -= hours * 60 * 60
+	}
+
+	minutes := math.Floor(seconds / 60)
+
+	if minutes > 0 {
+		format += fmt.Sprintf("%vm ", minutes)
+		seconds -= minutes * 60
+	}
+
+	if format == "" {
+		format += fmt.Sprintf("%vs ", seconds)
+	}
+
+	return strings.TrimSpace(format)
 }

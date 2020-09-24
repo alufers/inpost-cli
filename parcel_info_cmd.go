@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"regexp"
 	"strings"
 	"time"
 
@@ -85,10 +84,7 @@ var ParcelInfoCmd = &cli.Command{
 				fmt.Fprintf(infoBuf, "Open code: %v\n", p.OpenCode)
 			}
 			if !p.ExpiryDate.IsZero() {
-				expiryTime := ""
-				expiryTime = p.ExpiryDate.Sub(time.Now()).String()
-				expiryTime = regexp.MustCompile("[0-9\\.]*s$").ReplaceAllString(expiryTime, "")
-				fmt.Fprintf(infoBuf, "Expiry time: %v\n", expiryTime)
+				fmt.Fprintf(infoBuf, "Expiry time: %v\n", formatDuration(p.ExpiryDate.Sub(time.Now())))
 			}
 			if p.PickupPoint != nil {
 				fmt.Fprintf(infoBuf, "Pickup point:\n")
@@ -102,7 +98,7 @@ var ParcelInfoCmd = &cli.Command{
 						p.PickupPoint.AddressDetails.City,
 						p.PickupPoint.AddressDetails.Province,
 					)
-					fmt.Fprintf(infoBuf, "    Location description:%v\n", p.PickupPoint.LocationDescription)
+					fmt.Fprintf(infoBuf, "    Location description: %v\n", p.PickupPoint.LocationDescription)
 				}
 			}
 			if p.OpenCode != "" {

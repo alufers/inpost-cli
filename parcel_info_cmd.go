@@ -19,7 +19,7 @@ import (
 var ParcelInfoCmd = &cli.Command{
 	Name:        "parcel-info",
 	Aliases:     []string{"qr", "info"},
-	Description: "Shows detailed information about a parce, ingluding a QR code",
+	Description: "Shows detailed information about a parcel, including a QR code",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:        "format",

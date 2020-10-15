@@ -89,6 +89,7 @@ func main() {
 			TerminateOpenCompartment,
 			RefreshTokenCmd,
 			TokenInfoCmd,
+			TrackCmd,
 		},
 	}
 	app.EnableBashCompletion = true

@@ -15,15 +15,31 @@ Additionally:
 
 This project was developed solely by me and is not affiliated with InPost in any way. This tool uses the same API as the Android InPost app. This program was created to enable the usage of InPost services from GNU/Linux. 
 
-## Installation
+## Download
 
 Prebuilt binaries are available for download [at the releases page](https://github.com/alufers/inpost-cli/releases/latest). Linux (arm, arm64, and x64), macOS and windows are supported.
 
-If you have Go installed on your system, you can compile and install `inpost-cli` this way:
+## Manual installation
+
+If you have Go (at least version 1.12) installed on your system, you can compile and install `inpost-cli` this way:
 
 ```bash
 $ go get -u github.com/alufers/inpost-cli
 ```
+
+This will download, compile the program and put it to `$GOPATH/bin` (`~/go/bin` by default). You can add this folder to `$PATH` to use this program as a command.
+
+You can also clone the repository and run in the cloned repository:
+
+```bash
+$ go build .
+```
+
+This will output a binary named `inpost-cli` in the directory.
+
+This program uses go modules, which were added in Go 1.12 and that makes 1.12 the minimal required Go version, although I recommend using the latest stable release - 1.15.6 at the time of writing (December 2020). 
+
+If for whatever reason you cannot install a new version of Go there binaries available for various operating systems and architectures at the [releases page](https://github.com/alufers/inpost-cli/releases).
 
 ## Usage
 

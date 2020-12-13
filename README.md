@@ -105,9 +105,27 @@ Press 'y' and enter to open compartment at Raciborska 121, Rybnik (Stacja paliw 
 
 `inpost-cli` does not check whether you are close to the locker, so you can remotely open the compartment for somebody else.
 
+### Tracking (package history)
+
+To display the history of the package use:
+
+```bash
+$ inpost-cli track <shipment-number>
+2020-12-03 19:04:21 +0100 CET delivered (DOR)
+2020-12-02 19:46:27 +0100 CET ready_to_pickup (UWP)
+2020-12-02 09:47:43 +0100 CET out_for_delivery (PDD_2)
+2020-12-01 03:33:43 +0100 CET adopted_at_source_branch (PWO)
+2020-11-30 15:29:00 +0100 CET collected_from_sender (PKL)
+2020-11-28 13:41:08 +0100 CET confirmed (PPN)
+```
+
+This command also works for packages not sent using our phone number. It accepts the `--json` flag.
+
+### Help
+
 For help use:
 
-```
+```bash
 $ inpost-cli help
 ```
 

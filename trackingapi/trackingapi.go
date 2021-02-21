@@ -22,7 +22,7 @@ func GetTrackingData(parcelNumber string) (*TrackingAPISchema, error) {
 	defer resp.Body.Close()
 	if resp.StatusCode > 399 {
 		data, _ := ioutil.ReadAll(resp.Body)
-		return nil, fmt.Errorf("racieved HTTP error code form tracking endpoint %v, HTTP body: %v", resp.StatusCode, string(data))
+		return nil, fmt.Errorf("recieved HTTP error code form tracking endpoint %v, HTTP body: %v", resp.StatusCode, string(data))
 	}
 	decoder := json.NewDecoder(resp.Body)
 	trackingData := &TrackingAPISchema{}

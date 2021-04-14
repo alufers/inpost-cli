@@ -27,7 +27,7 @@ var LoginCmd = &cli.Command{
 		},
 		&cli.StringFlag{
 			Name:  "sms-code",
-			Usage: "SMS code recieved from a previously sent message, use this options to log-in non-interactively",
+			Usage: "SMS code received from a previously sent message, use this options to log-in non-interactively",
 		},
 	},
 	Action: func(c *cli.Context) error {
@@ -54,7 +54,7 @@ var LoginCmd = &cli.Command{
 		}
 
 		if smsCode == "" && !phoneNumberPassed {
-			fmt.Print("Enter the sms code you recieved: ")
+			fmt.Print("Enter the sms code you received: ")
 			reader := bufio.NewReader(os.Stdin)
 			smsCode, _ = reader.ReadString('\n')
 			smsCode = strings.TrimSuffix(smsCode, "\n")

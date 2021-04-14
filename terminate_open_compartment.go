@@ -22,7 +22,7 @@ var TerminateOpenCompartment = &cli.Command{
 		apiClient := swagger.NewAPIClient(cfg)
 		sessionUuid := c.Args().Get(0)
 		if sessionUuid == "" {
-			return fmt.Errorf("Please pass a sesion uuid")
+			return fmt.Errorf("Please pass a session uuid")
 		}
 
 		resp, _, err := apiClient.DefaultApi.V1CollectTerminateSessionUuidPost(

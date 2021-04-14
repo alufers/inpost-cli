@@ -121,7 +121,7 @@ var OpenCompartmentCmd = &cli.Command{
 
 		openResp, _, err := apiClient.DefaultApi.V1CollectCompartmentOpenSessionUuidPost(c.Context, resp.SessionUuid)
 		if err != nil {
-			return fmt.Errorf("failed to open compartnment: %v", err)
+			return fmt.Errorf("failed to open compartment: %v", err)
 		}
 		log.Printf("CompartmentOpen resp: %#v", openResp)
 

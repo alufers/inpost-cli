@@ -44,10 +44,10 @@ func resolveShipmentNumber(ctx context.Context, apiClient *swagger.APIClient, pa
 		}
 	}
 	if len(matchingPackages) == 0 {
-		return "", fmt.Errorf("no package with matching shipmend number of '%v' found", passedNumber)
+		return "", fmt.Errorf("no package with matching shipment number of '%v' found", passedNumber)
 	}
 	if len(matchingPackages) > 1 {
-		msg := "The passed package number '%v' is ambigous, it matches: "
+		msg := "The passed package number '%v' is ambiguous, it matches: "
 		for _, p := range matchingPackages {
 			msg += p.ShipmentNumber + ", "
 		}

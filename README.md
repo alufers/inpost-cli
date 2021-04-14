@@ -11,7 +11,7 @@ With `inpost-cli` you can:
 Additionally:
 
 * ✅ Using this tool does not disable SMS notifications (unlike the app)
-* ✅ Your privacy is respected, no unecessary tracking features are included.
+* ✅ Your privacy is respected, no unnecessary tracking features are included.
 
 This project was developed solely by me and is not affiliated with InPost in any way. This tool uses the same API as the Android InPost app. This program was created to enable the usage of InPost services from GNU/Linux. 
 
@@ -43,13 +43,13 @@ If for whatever reason you cannot install a new version of Go there binaries ava
 
 ## Usage
 
-First of all you will need to log in using yout phone number. Issue this command:
+First of all you will need to log in using your phone number. Issue this command:
 
 ```bash
 $ inpost-cli login
 ```
 
-You will be asked for your phone number and then you will recieve a SMS message containng a code which you have to enter. Now you can use all the features of the tool.
+You will be asked for your phone number and then you will receive an SMS message containing a code which you have to enter. Now you can use all the features of the tool.
 
 ## Viewing package data
 
@@ -90,9 +90,9 @@ When the package is ready to pick up you may either generate a QR code in the te
 $ inpost-cli qr <shipment-number>
 ```
 
-![A screenshot showing the terminal outpout of the previous command, including a QR code](./docs/screenshot-qr.png)
+![A screenshot showing the terminal output of the previous command, including a QR code](./docs/screenshot-qr.png)
 
-TIP: You don't have to enter the whole shipment number, just the few first digits to differentiatie between your parcels.
+TIP: You don't have to enter the whole shipment number, just the few first digits to differentiate between your parcels.
 
 Alternatively you can use the remote-open feature.
 

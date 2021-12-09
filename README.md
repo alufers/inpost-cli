@@ -24,7 +24,7 @@ Prebuilt binaries are available for download [at the releases page](https://gith
 If you have Go (at least version 1.12) installed on your system, you can compile and install `inpost-cli` this way:
 
 ```bash
-$ go get -u github.com/alufers/inpost-cli
+$ go install github.com/alufers/inpost-cli@latest
 ```
 
 This will download, compile the program and put it to `$GOPATH/bin` (`~/go/bin` by default). You can add this folder to `$PATH` to use this program as a command.

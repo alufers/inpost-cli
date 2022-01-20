@@ -40,8 +40,8 @@ var LoginCmd = &cli.Command{
 			fmt.Print("Enter your phone number: ")
 			reader := bufio.NewReader(os.Stdin)
 			phoneNumber, _ = reader.ReadString('\n')
-			phoneNumber = strings.TrimSuffix(phoneNumber, "\n")
-
+			phoneNumber = strings.Replace(phoneNumber, "\r", "", -1)
+			phoneNumber = strings.Replace(phoneNumber, "\n", "", -1)
 		}
 		apiClient := swagger.NewAPIClient(swagger.NewConfiguration())
 		if phoneNumber != "" && smsCode == "" {
@@ -57,7 +57,9 @@ var LoginCmd = &cli.Command{
 			fmt.Print("Enter the sms code you recieved: ")
 			reader := bufio.NewReader(os.Stdin)
 			smsCode, _ = reader.ReadString('\n')
-			smsCode = strings.TrimSuffix(smsCode, "\n")
+
+			smsCode = strings.Replace(smsCode, "\r", "", -1)
+			smsCode = strings.Replace(smsCode, "\n", "", -1)
 
 		}
 		if smsCode != "" {

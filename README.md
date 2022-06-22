@@ -7,6 +7,7 @@ With `inpost-cli` you can:
 * ✅ View packages connected to your phone number
 * ✅ Generate QR codes for opening the lockers
 * ✅ Open the lockers remotely from anywhere in the world (unlike the mobile app which requires you to be physically close to the locker)
+* ✅ Use multiple phone numbers at once (the app cannot handle that)
 
 Additionally:
 
@@ -49,7 +50,9 @@ First of all you will need to log in using yout phone number. Issue this command
 $ inpost-cli login
 ```
 
-You will be asked for your phone number and then you will recieve a SMS message containng a code which you have to enter. Now you can use all the features of the tool.
+You will be asked for your phone number and then you will recieve a SMS message containng a code which you have to enter. Now you can use all the features of the tool. 
+
+**Note:** You can run this command multiple times with different phone numbers to use multiple accounts.
 
 ## Viewing package data
 
@@ -81,6 +84,8 @@ $ inpost-cli ls -s ready_to_pickup
 ```bash
 $ inpost-cli ls -s out_for_delivery -f json
 ```
+
+**Tip:** Use `inpost-cli -p <PHONE_NUMBER> ls ` to view packages connected to a specific phone number.
 
 ### Retrieving your parcels
 
@@ -128,6 +133,18 @@ For help use:
 ```bash
 $ inpost-cli help
 ```
+
+### Configuration
+
+By default the configuration is stored in:
+
+---
+|Windows|Linux|MacOS|
+|-------|------|------|
+|`%APPDATA%/alufers/inpost-cli/config.json`|`$HOME/.config/alufers/inpost-cli/config.json`|`$HOME/Library/Application Support/alufers/inpost-cli/config.json`|
+---
+
+You can use the `--config` flag (place it BEFORE the subcommand) to specify a different configuration file (e.g. `inpost-cli --config ~/my-config.json ls`).
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

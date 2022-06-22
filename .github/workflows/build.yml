@@ -29,7 +29,10 @@ jobs:
           GOOS=linux GOARCH=arm go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_linux_armv7 .
       - name: Build for macOS
         run: |
-          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_macos .
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_macos_x86_64 .
+      - name: Build for macOS arm64
+        run: |
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_macos_arm64 .
       - name: Build for x86_64 windows
         run: |
           GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -X 'main.InpostCliVersion=${{ steps.get_version.outputs.VERSION }}'" -o ./build/inpost-cli_windows_x86_64.exe .

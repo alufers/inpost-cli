@@ -19,7 +19,8 @@ import (
 var ParcelInfoCmd = &cli.Command{
 	Name:        "parcel-info",
 	Aliases:     []string{"qr", "info"},
-	Description: "Shows detailed information about a parcel, including a QR code",
+	Description: "shows detailed information about a parcel, including a QR code",
+	Usage:       "[--format=text|json] [--qr H|M|L] <SHIPMENT_NUMBER> -- show info about a package and a QR code",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
 			Name:        "format",
@@ -52,13 +53,11 @@ var ParcelInfoCmd = &cli.Command{
 		default:
 			return fmt.Errorf("invalid --qr option, valid values are: L, M, H, none")
 		}
-		if err := refreshTokenIfNeeded(c.Context); err != nil {
+		if err := RefreshAllTokens(c); err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}
-		cfg := swagger.NewConfiguration()
-		cfg.DefaultHeader["Authorization"] = "Bearer " + config.AuthToken
-		apiClient := swagger.NewAPIClient(cfg)
-		shipmentNumber, err := resolveShipmentNumber(c.Context, apiClient, c.Args().Get(0))
+
+		shipmentNumber, apiClient, err := resolveShipmentNumber(c, c.Args().Get(0))
 		if err != nil {
 			return fmt.Errorf("failed to resolve shipment number: %w", err)
 		}

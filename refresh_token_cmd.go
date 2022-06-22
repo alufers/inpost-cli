@@ -11,7 +11,7 @@ var RefreshTokenCmd = &cli.Command{
 	Category: "debugging commands",
 	Flags:    []cli.Flag{},
 	Action: func(c *cli.Context) error {
-		err := doRefreshToken(c.Context)
+		err := RefreshAllTokens(c)
 		if err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}

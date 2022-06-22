@@ -16,7 +16,7 @@ import (
 var OpenCompartmentCmd = &cli.Command{
 	Name:        "open-compartment",
 	Aliases:     []string{"open"},
-	Usage:       "remotely opens a compartment in the pick-up machine, a shipment number must be given",
+	Usage:       "[--open-code OPEN_CODE] [--no-confirm] <SHIPMENT_NUMBER> -- remotely open compartment",
 	Description: "Remotely opens a compartment in the pick-up machine.\n   Warning: There is no distance limit. Use with caution as you can get your package stolen this way.",
 	Flags: []cli.Flag{
 		&cli.BoolFlag{
@@ -29,13 +29,11 @@ var OpenCompartmentCmd = &cli.Command{
 		},
 	},
 	Action: func(c *cli.Context) error {
-		if err := refreshTokenIfNeeded(c.Context); err != nil {
+		if err := RefreshAllTokens(c); err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}
-		cfg := swagger.NewConfiguration()
-		cfg.DefaultHeader["Authorization"] = "Bearer " + config.AuthToken
-		apiClient := swagger.NewAPIClient(cfg)
-		shipmentNumber, err := resolveShipmentNumber(c.Context, apiClient, c.Args().Get(0))
+
+		shipmentNumber, apiClient, err := resolveShipmentNumber(c, c.Args().Get(0))
 		if err != nil {
 			return fmt.Errorf("failed to resolve shipment number: %w", err)
 		}

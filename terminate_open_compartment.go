@@ -4,22 +4,24 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/alufers/inpost-cli/swagger"
 	"github.com/urfave/cli/v2"
 )
 
 var TerminateOpenCompartment = &cli.Command{
 	Name:        "terminate-open-compartment",
-	Description: "Terminates a compartment opening session by uuid of the session",
+	Description: "Terminates a compartment opening session by uuid of the session.  Only one account must be logged in or a phone number filter must be set.",
 	Category:    "debugging commands",
 	Flags:       []cli.Flag{},
 	Action: func(c *cli.Context) error {
-		if err := refreshTokenIfNeeded(c.Context); err != nil {
+		if err := RefreshAllTokens(c); err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}
-		cfg := swagger.NewConfiguration()
-		cfg.DefaultHeader["Authorization"] = "Bearer " + config.AuthToken
-		apiClient := swagger.NewAPIClient(cfg)
+		limitedAccounts := GetLimitedAccounts(c)
+		if len(limitedAccounts) != 1 {
+			return fmt.Errorf("must be logged in with one account or limited with a phone number filter (-p)")
+		}
+
+		apiClient := limitedAccounts[0].ToClient()
 		sessionUuid := c.Args().Get(0)
 		if sessionUuid == "" {
 			return fmt.Errorf("Please pass a sesion uuid")

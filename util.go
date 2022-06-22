@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"fmt"
 	"math"
 	"strings"
@@ -10,6 +9,7 @@ import (
 
 	"github.com/alufers/inpost-cli/swagger"
 	"github.com/antihax/optional"
+	"github.com/urfave/cli/v2"
 )
 
 func prependSpaceIfNotEmpty(d string) string {
@@ -19,32 +19,54 @@ func prependSpaceIfNotEmpty(d string) string {
 	return " " + d
 }
 
-func resolveShipmentNumber(ctx context.Context, apiClient *swagger.APIClient, passedNumber string) (string, error) {
+func resolveShipmentNumber(c *cli.Context, passedNumber string) (string, *swagger.APIClient, error) {
 	passedNumber = strings.TrimSpace(passedNumber)
 	if passedNumber == "" {
-		return "", fmt.Errorf("shipment number cannot be empty (you can pass only the beginning of the number if the package is yours)")
-	}
-	if len(passedNumber) == 24 {
-		return passedNumber, nil
-	}
-
-	ua := "1970-01-01T00:00:00.001Z"
-	data, _, err := apiClient.DefaultApi.V1ParcelGet(ctx, &swagger.DefaultApiV1ParcelGetOpts{
-		UpdatedAfter: optional.NewString(ua),
-	})
-	if err != nil {
-		return "", fmt.Errorf("failed to request parcels to resolve shipment number: %w", err)
+		return "", nil, fmt.Errorf("shipment number cannot be empty (you can pass only the beginning of the number if the package is yours)")
 	}
 
 	matchingPackages := []swagger.Parcel{}
+	ua := "1970-01-01T00:00:00.001Z"
+	limitedAccounts := GetLimitedAccounts(c)
+	var matchingClient *swagger.APIClient
 
-	for _, p := range data {
-		if strings.HasPrefix(p.ShipmentNumber, passedNumber) {
-			matchingPackages = append(matchingPackages, p)
+	if len(passedNumber) == 24 && len(limitedAccounts) == 1 {
+		return passedNumber, limitedAccounts[0].ToClient(), nil
+	}
+
+	if len(limitedAccounts) == 0 {
+		return "", nil, fmt.Errorf("no inpost accounts configured, please use `inpost-cli login` to configure one")
+	}
+
+	for _, acc := range limitedAccounts {
+		apiClient := acc.ToClient()
+		data, _, err := apiClient.DefaultApi.V1ParcelGet(c.Context, &swagger.DefaultApiV1ParcelGetOpts{
+			UpdatedAfter: optional.NewString(ua),
+		})
+		if err != nil {
+			return "", nil, fmt.Errorf("failed to request parcels (phone number: %v) to resolve shipment number: %w", acc.PhoneNumber, err)
+		}
+		// match prefixes
+		for _, p := range data {
+			if strings.HasPrefix(p.ShipmentNumber, passedNumber) {
+				matchingPackages = append(matchingPackages, p)
+				matchingClient = apiClient
+			}
 		}
 	}
+
+	// remove duplicates
+	seen := make(map[string]bool)
+	result := []swagger.Parcel{}
+	for _, p := range matchingPackages {
+		if _, ok := seen[p.ShipmentNumber]; !ok {
+			result = append(result, p)
+			seen[p.ShipmentNumber] = true
+		}
+	}
+
 	if len(matchingPackages) == 0 {
-		return "", fmt.Errorf("no package with matching shipmend number of '%v' found", passedNumber)
+		return "", nil, fmt.Errorf("no package with matching shipmend number of '%v' found in %d accounts", passedNumber, len(limitedAccounts))
 	}
 	if len(matchingPackages) > 1 {
 		msg := "The passed package number '%v' is ambigous, it matches: "
@@ -52,9 +74,9 @@ func resolveShipmentNumber(ctx context.Context, apiClient *swagger.APIClient, pa
 			msg += p.ShipmentNumber + ", "
 		}
 		msg += "please provide more digits of the number"
-		return "", fmt.Errorf(msg, passedNumber)
+		return "", nil, fmt.Errorf(msg, passedNumber)
 	}
-	return matchingPackages[0].ShipmentNumber, nil
+	return matchingPackages[0].ShipmentNumber, matchingClient, nil
 }
 
 // formatDuration formats a duration without the seconds

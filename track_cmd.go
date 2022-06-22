@@ -3,13 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/alufers/inpost-cli/swagger"
+
 	"github.com/alufers/inpost-cli/trackingapi"
 	"github.com/urfave/cli/v2"
 )
 
 var TrackCmd = &cli.Command{
 	Name:        "track",
+	Usage:       "[--format=text|json] <SHIPMENT_NUMBER> -- show tracking",
 	Description: "Shows detailed tracking information about the parcel",
 
 	Flags: []cli.Flag{
@@ -22,13 +23,11 @@ var TrackCmd = &cli.Command{
 		},
 	},
 	Action: func(c *cli.Context) error {
-		if err := refreshTokenIfNeeded(c.Context); err != nil {
+		if err := RefreshAllTokens(c); err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}
-		cfg := swagger.NewConfiguration()
-		cfg.DefaultHeader["Authorization"] = "Bearer " + config.AuthToken
-		apiClient := swagger.NewAPIClient(cfg)
-		shipmentNumber, err := resolveShipmentNumber(c.Context, apiClient, c.Args().Get(0))
+
+		shipmentNumber, _, err := resolveShipmentNumber(c, c.Args().Get(0))
 		if err != nil {
 			return fmt.Errorf("failed to resolve shipment number: %w", err)
 		}

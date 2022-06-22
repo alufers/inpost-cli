@@ -2,23 +2,20 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"path/filepath"
 	"strings"
 
 	"github.com/alufers/inpost-cli/swagger"
 	"github.com/antihax/optional"
-	"github.com/shibukawa/configdir"
 	"github.com/urfave/cli/v2"
 )
 
 var LoginCmd = &cli.Command{
 	Name:        "login",
-	Usage:       "log in to inpost via SMS code",
+	Usage:       "[--phone-number PHONE_NUMBER] [--sms-code PASSWORD] -- Log in to InPost, use without arguments for intaractive mode",
 	Description: "Without any arguments it logs you in interactively. When only --phone-number is passed it sends a text with the code. When both --phone-number and --sms-code are passed it confirms the login.",
 	Flags: []cli.Flag{
 		&cli.StringFlag{
@@ -72,13 +69,21 @@ var LoginCmd = &cli.Command{
 				log.Fatalf("failed to confirm sms code: %v", err)
 			}
 			log.Printf("ConfirmSMSCode resp data: %#v", data)
-			folders := configDirs.QueryFolders(configdir.Global)
-			log.Printf("Saving AuthToken and RefreshToken in %v", filepath.Join(folders[0].Path, "config.json"))
-			marshaledJSON, err := json.Marshal(data)
-			if err != nil {
-				return err
+
+			cfg := GetConfig(c)
+			// remove entries with the same PhoneNumber from cfg.Accounts
+			for i, acc := range cfg.Accounts {
+				if acc.PhoneNumber == phoneNumber {
+					cfg.Accounts = append(cfg.Accounts[:i], cfg.Accounts[i+1:]...)
+					log.Printf("Removed existing account with phone number %s from config", phoneNumber)
+				}
 			}
-			folders[0].WriteFile("config.json", marshaledJSON)
+			cfg.Accounts = append(cfg.Accounts, &ConfigAccount{
+				PhoneNumber:  phoneNumber,
+				AuthToken:    data.AuthToken,
+				RefreshToken: data.RefreshToken,
+			})
+			return SaveConfig(c)
 		}
 		return nil
 	},

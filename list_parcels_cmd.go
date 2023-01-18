@@ -27,12 +27,12 @@ func PrintParcelListTable(parcels []swagger.Parcel) {
 		}
 		expiryTime := ""
 		if !v.ExpiryDate.IsZero() {
-			expiryTime = formatDuration(v.ExpiryDate.Sub(time.Now()))
+			expiryTime = formatDuration(time.Until(v.ExpiryDate))
 		}
 		timeSinceStatus := ""
 		for _, s := range v.StatusHistory {
 			if s.Status == v.Status {
-				timeSinceStatus = formatDuration(time.Now().Sub(s.Date)) + " ago"
+				timeSinceStatus = formatDuration(time.Since(s.Date))
 				break
 			}
 		}
@@ -57,7 +57,7 @@ func PrintParcelListTable(parcels []swagger.Parcel) {
 				{tablewriter.FgHiYellowColor},
 				{tablewriter.Bold, tablewriter.FgHiYellowColor},
 			}
-			if !v.ExpiryDate.IsZero() && v.ExpiryDate.Sub(time.Now()) < 12*time.Hour {
+			if !v.ExpiryDate.IsZero() && time.Until(v.ExpiryDate) < 12*time.Hour {
 				colors = append(colors, tablewriter.Colors{tablewriter.Bold, tablewriter.BgWhiteColor, tablewriter.BgRedColor})
 			} else {
 				colors = append(colors, tablewriter.Colors{tablewriter.FgHiYellowColor})

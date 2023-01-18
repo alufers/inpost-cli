@@ -23,7 +23,7 @@ var TokenInfoCmd = &cli.Command{
 			claims := tok.Claims.(*jwt.StandardClaims)
 			fmt.Printf("%v\n", acc.PhoneNumber)
 			fmt.Printf("  claims: %+v\n", claims)
-			fmt.Printf("  time until expiration: %v\n", time.Unix(claims.ExpiresAt, 0).Sub(time.Now()))
+			fmt.Printf("  time until expiration: %v\n", time.Until(time.Unix(claims.ExpiresAt, 0)))
 		}
 		if !didPrint {
 			return fmt.Errorf("no accounts found")

@@ -24,7 +24,7 @@ var TerminateOpenCompartment = &cli.Command{
 		apiClient := limitedAccounts[0].ToClient()
 		sessionUuid := c.Args().Get(0)
 		if sessionUuid == "" {
-			return fmt.Errorf("Please pass a sesion uuid")
+			return fmt.Errorf("please pass a sesion uuid")
 		}
 
 		resp, _, err := apiClient.DefaultApi.V1CollectTerminateSessionUuidPost(

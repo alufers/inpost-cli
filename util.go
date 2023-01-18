@@ -57,10 +57,8 @@ func resolveShipmentNumber(c *cli.Context, passedNumber string) (string, *swagge
 
 	// remove duplicates
 	seen := make(map[string]bool)
-	result := []swagger.Parcel{}
 	for _, p := range matchingPackages {
 		if _, ok := seen[p.ShipmentNumber]; !ok {
-			result = append(result, p)
 			seen[p.ShipmentNumber] = true
 		}
 	}

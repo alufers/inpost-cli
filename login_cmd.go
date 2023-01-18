@@ -46,7 +46,7 @@ var LoginCmd = &cli.Command{
 			if err != nil {
 				log.Fatalf("failed to send SMS code: %v", err)
 			}
-			data, err := ioutil.ReadAll(resp.Body)
+			data, _ := ioutil.ReadAll(resp.Body)
 			log.Printf("SendSMSCode response: %v", string(data))
 		}
 

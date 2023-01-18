@@ -69,7 +69,7 @@ var ParcelInfoCmd = &cli.Command{
 		}
 
 		if len(parcels) <= 0 {
-			return fmt.Errorf("No such parcel found")
+			return fmt.Errorf("no such parcel found")
 		}
 		p := parcels[0]
 		infoBuf := &bytes.Buffer{}

@@ -61,7 +61,7 @@ func LoadConfig(c *cli.Context) error {
 	}
 	c.Context = context.WithValue(c.Context, ConfigKey, config)
 	if len(c.StringSlice("phone-number")) > 0 && len(GetLimitedAccounts(c)) == 0 {
-		return fmt.Errorf("Invalid phone number filter: %v, no accounts matching found", c.StringSlice("phone-number"))
+		return fmt.Errorf("invalid phone number filter: %v, no accounts matching found", c.StringSlice("phone-number"))
 	}
 	return nil
 }

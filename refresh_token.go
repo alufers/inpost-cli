@@ -37,7 +37,7 @@ func refreshTokenIfNeeded(c *cli.Context, cfgAccount *ConfigAccount) error {
 		claims := tok.Claims.(*jwt.StandardClaims)
 		expirationDate := time.Unix(claims.ExpiresAt, 0)
 		if expirationDate.Before(time.Now()) {
-			log.Printf("Token expired %v ago, refreshing...", time.Now().Sub(expirationDate))
+			log.Printf("Token expired %v ago, refreshing...", time.Since(expirationDate))
 			return doRefreshToken(c, cfgAccount)
 		}
 	}

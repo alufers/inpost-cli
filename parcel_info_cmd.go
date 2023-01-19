@@ -83,7 +83,7 @@ var ParcelInfoCmd = &cli.Command{
 				fmt.Fprintf(infoBuf, "Open code: %v\n", p.OpenCode)
 			}
 			if !p.ExpiryDate.IsZero() {
-				fmt.Fprintf(infoBuf, "Expiry time: %v\n", formatDuration(p.ExpiryDate.Sub(time.Now())))
+				fmt.Fprintf(infoBuf, "Expiry time: %v\n", formatDuration(time.Until(p.ExpiryDate)))
 			}
 			if p.PickupPoint != nil {
 				fmt.Fprintf(infoBuf, "Pickup point:\n")

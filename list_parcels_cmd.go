@@ -12,7 +12,7 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-func PrintParcelListTable(parcels []swagger.Parcel) {
+func PrintParcelListTable(parcels []swagger.Parcel, showDates bool) {
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Shipment number", "Sender", "Status", "Pickup point", "City", "Open code", "Stored for"})
 	for _, v := range parcels {
@@ -27,12 +27,20 @@ func PrintParcelListTable(parcels []swagger.Parcel) {
 		}
 		expiryTime := ""
 		if !v.ExpiryDate.IsZero() {
-			expiryTime = formatDuration(time.Until(v.ExpiryDate))
+			if showDates {
+				expiryTime = v.ExpiryDate.Format("2006-01-02 15:04:05")
+			} else {
+				expiryTime = formatDuration(time.Until(v.ExpiryDate))
+			}
 		}
 		timeSinceStatus := ""
 		for _, s := range v.StatusHistory {
 			if s.Status == v.Status {
-				timeSinceStatus = formatDuration(time.Since(s.Date))
+				if showDates {
+					timeSinceStatus = s.Date.Format("2006-01-02 15:04:05")
+				} else {
+					timeSinceStatus = formatDuration(time.Since(s.Date))
+				}
 				break
 			}
 		}
@@ -71,7 +79,7 @@ func PrintParcelListTable(parcels []swagger.Parcel) {
 var ListParcelsCmd = &cli.Command{
 	Name:      "list-parcels",
 	Aliases:   []string{"p", "parcels", "ls"},
-	Usage:     "[--format table|json] [--status STATUS]...  -- List parcels assignet to your accounts",
+	Usage:     "[--format table|json] [--date|-d] [--status STATUS]...  -- List parcels assignet to your accounts",
 	ArgsUsage: "fffff",
 	Flags: []cli.Flag{
 		&cli.StringSliceFlag{
@@ -85,6 +93,11 @@ var ListParcelsCmd = &cli.Command{
 			DefaultText: "table",
 			Value:       "table",
 			Usage:       "The output format: json or table",
+		},
+		&cli.BoolFlag{
+			Name:    "date",
+			Aliases: []string{"d"},
+			Usage:   "Show dates instead of time ago",
 		},
 	},
 	Action: func(c *cli.Context) error {
@@ -140,7 +153,7 @@ var ListParcelsCmd = &cli.Command{
 				if len(parcelsByPhoneNumber) > 1 {
 					fmt.Printf("%v:\n", phoneNumber)
 				}
-				PrintParcelListTable(parcels)
+				PrintParcelListTable(parcels, c.Bool("date"))
 			}
 
 		case "json":

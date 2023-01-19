@@ -64,10 +64,10 @@ func resolveShipmentNumber(c *cli.Context, passedNumber string) (string, *swagge
 	}
 
 	if len(matchingPackages) == 0 {
-		return "", nil, fmt.Errorf("no package with matching shipmend number of '%v' found in %d accounts", passedNumber, len(limitedAccounts))
+		return "", nil, fmt.Errorf("no package with matching shipment number of '%v' found in %d accounts", passedNumber, len(limitedAccounts))
 	}
 	if len(matchingPackages) > 1 {
-		msg := "The passed package number '%v' is ambigous, it matches: "
+		msg := "The passed package number '%v' is ambiguous, it matches: "
 		for _, p := range matchingPackages {
 			msg += p.ShipmentNumber + ", "
 		}

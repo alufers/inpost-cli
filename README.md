@@ -8,6 +8,7 @@ With `inpost-cli` you can:
 * ✅ Generate QR codes for opening the lockers
 * ✅ Open the lockers remotely from anywhere in the world (unlike the mobile app which requires you to be physically close to the locker)
 * ✅ Use multiple phone numbers at once (the app cannot handle that)
+* ✅ List returns, and generate a QR code to return your products (for example for Allegro)
 
 Additionally:
 

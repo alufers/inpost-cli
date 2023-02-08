@@ -38,21 +38,11 @@ var ParcelInfoCmd = &cli.Command{
 		},
 	},
 	Action: func(c *cli.Context) error {
-		var level *qr.Level
-		switch c.String("qr") {
-		case "L":
-			val := qr.L
-			level = &val
-		case "M":
-			val := qr.M
-			level = &val
-		case "H":
-			val := qr.H
-			level = &val
-		case "none":
-		default:
-			return fmt.Errorf("invalid --qr option, valid values are: L, M, H, none")
+		level, err := stringToQRLevel(c.String("qr"))
+		if err != nil {
+			return err
 		}
+
 		if err := RefreshAllTokens(c); err != nil {
 			return fmt.Errorf("failed to refresh token: %v", err)
 		}

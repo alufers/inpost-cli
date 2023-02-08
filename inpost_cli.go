@@ -38,6 +38,7 @@ func main() {
 			RefreshTokenCmd,
 			TokenInfoCmd,
 			TrackCmd,
+			ListReturnsCmd,
 		},
 		Before: LoadConfig,
 	}

@@ -10,6 +10,7 @@ import (
 	"github.com/alufers/inpost-cli/swagger"
 	"github.com/antihax/optional"
 	"github.com/urfave/cli/v2"
+	"rsc.io/qr"
 )
 
 func prependSpaceIfNotEmpty(d string) string {
@@ -108,4 +109,24 @@ func formatDuration(d time.Duration) string {
 	}
 
 	return strings.TrimSpace(format)
+}
+
+func stringToQRLevel(str string) (*qr.Level, error) {
+	var level *qr.Level
+	switch str {
+	case "L":
+		val := qr.L
+		level = &val
+	case "M":
+		val := qr.M
+		level = &val
+	case "H":
+		val := qr.H
+		level = &val
+	case "none":
+	default:
+		return nil, fmt.Errorf("invalid --qr option, valid values are: L, M, H, none")
+	}
+	return level, nil
+
 }

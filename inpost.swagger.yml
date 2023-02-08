@@ -505,6 +505,54 @@ paths:
           description: "Response body type was declared as `Single<DeliveryPointsResponse>`"
 
       x-retrofit-interface: "p024pl.inpost.inmobile.network.map.MapApi"
+  "/v1/returns/tickets":
+    "get":
+      summary: "ReturnTicketApi.m4664a"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReturnTicketsResponse"
+          description: "Response body type was declared as `/* renamed from: a */\n\
+            Single<ReturnTicketsResponse>`"
+      x-retrofit-interface: "x50.ReturnTicketApi"
+    "post":
+      summary: "CreateTicketApi.m4707b"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CreateTicketDetailsNetwork"
+          description: "Response body type was declared as `/* renamed from: b */\n\
+            Single<CreateTicketDetailsNetwork>`"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrganizationTicketRequest"
+      x-retrofit-interface: "x50.CreateTicketApi"
+  "/v1/returns/tickets/{uuid}":
+    "get":
+      summary: "ReturnTicketApi.m4663b"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        description: "ReturnTicketApi.m4663b.str"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "default":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReturnTicketNetwork"
+          description: "Response body type was declared as `/* renamed from: b */\n\
+            Single<ReturnTicketNetwork>`"
+      x-retrofit-interface: "x50.ReturnTicketApi"
+      
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
@@ -806,4 +854,121 @@ components:
         "row":
           type: "integer"
         "side":
+          type: "string"
+    "ReturnTicketsResponse":
+      type: "object"
+      properties:
+        "tickets":
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ReturnTicketNetwork"
+    "ReturnTicketNetwork":
+      type: "object"
+      properties:
+        "acceptedDate":
+          type: "string"
+          format: "date-time"
+        "address":
+          type: "string"
+        "createdDate":
+          type: "string"
+          format: "date-time"
+        "deliveredDate":
+          type: "string"
+          format: "date-time"
+        "description":
+          type: "string"
+        "eventLog":
+          type: "array"
+          items:
+            $ref: "#/components/schemas/ReturnTicketEventLogNetwork"
+        "expiryDate":
+          type: "string"
+          format: "date-time"
+        "formType":
+          type: "string"
+        "operations":
+          $ref: "#/components/schemas/ReturnTicketOperationsNetwork"
+        "orderNumber":
+          type: "string"
+        "organizationName":
+          type: "string"
+        "parcelSize":
+          type: "string"
+        "qrCode":
+          type: "string"
+        "returnCode":
+          type: "string"
+        "returnReason":
+          type: "string"
+        "rma":
+          type: "string"
+        "sentDate":
+          type: "string"
+          format: "date-time"
+        "shipmentNumber":
+          type: "string"
+        "status":
+          type: "string"
+        "uuid":
+          type: "string"
+    "ReturnTicketOperationsNetwork":
+      type: "object"
+      properties:
+        "autoArchivableSince":
+          type: "string"
+          format: "date-time"
+        "delete":
+          type: "boolean"
+        "highlight":
+          type: "boolean"
+        "manualArchive":
+          type: "boolean"
+        "refreshUntil":
+          type: "string"
+          format: "date-time"
+        "send":
+          type: "boolean"
+    "ReturnTicketEventLogNetwork":
+      type: "object"
+      properties:
+        "date":
+          type: "string"
+          format: "date-time"
+        "name":
+          type: "string"
+        "type":
+          type: "string"
+    "CreateOrganizationTicketRequest":
+      type: "object"
+      properties:
+        "address":
+          type: "string"
+        "description":
+          type: "string"
+        "orderNumber":
+          type: "string"
+        "organizationUuid":
+          type: "string"
+        "parcelSize":
+          type: "string"
+        "reasonUuid":
+          type: "string"
+        "sender":
+          $ref: "#/components/schemas/ReturnSenderNetwork"
+    "ReturnSenderNetwork":
+      type: "object"
+      properties:
+        "email":
+          type: "string"
+        "name":
+          type: "string"
+    "CreateTicketDetailsNetwork":
+      type: "object"
+      properties:
+        "accepted":
+          type: "boolean"
+        "rma":
+          type: "string"
+        "uuid":
           type: "string"

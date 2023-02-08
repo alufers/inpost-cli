@@ -39,6 +39,9 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**V1ParcelShipmentNumberGet**](docs/DefaultApi.md#v1parcelshipmentnumberget) | **Get** /v1/parcel/{shipmentNumber} | ParcelApi.oneParcel
 *DefaultApi* | [**V1ParcelsGet**](docs/DefaultApi.md#v1parcelsget) | **Get** /v1/parcels | ParcelApi.parcels
 *DefaultApi* | [**V1PointsGet**](docs/DefaultApi.md#v1pointsget) | **Get** /v1/points | MapApi.pointsFor
+*DefaultApi* | [**V1ReturnsTicketsGet**](docs/DefaultApi.md#v1returnsticketsget) | **Get** /v1/returns/tickets | ReturnTicketApi.m4664a
+*DefaultApi* | [**V1ReturnsTicketsPost**](docs/DefaultApi.md#v1returnsticketspost) | **Post** /v1/returns/tickets | CreateTicketApi.m4707b
+*DefaultApi* | [**V1ReturnsTicketsUuidGet**](docs/DefaultApi.md#v1returnsticketsuuidget) | **Get** /v1/returns/tickets/{uuid} | ReturnTicketApi.m4663b
 *DefaultApi* | [**V1SendSMSCodePhoneNumberGet**](docs/DefaultApi.md#v1sendsmscodephonenumberget) | **Get** /v1/sendSMSCode/{phoneNumber} | RegistrationApi.sendSMSCode
 *DefaultApi* | [**V2AgreementGet**](docs/DefaultApi.md#v2agreementget) | **Get** /v2/agreement | AgreementApi.agreement
 *DefaultApi* | [**V2AgreementPost**](docs/DefaultApi.md#v2agreementpost) | **Post** /v2/agreement | AgreementApi.agreement
@@ -60,6 +63,8 @@ Class | Method | HTTP request | Description
  - [CompartmentValidateResponse](docs/CompartmentValidateResponse.md)
  - [Completable](docs/Completable.md)
  - [ConfirmSmsResponse](docs/ConfirmSmsResponse.md)
+ - [CreateOrganizationTicketRequest](docs/CreateOrganizationTicketRequest.md)
+ - [CreateTicketDetailsNetwork](docs/CreateTicketDetailsNetwork.md)
  - [DeliveryPointData](docs/DeliveryPointData.md)
  - [DeliveryPointsResponse](docs/DeliveryPointsResponse.md)
  - [GeoPoint](docs/GeoPoint.md)
@@ -74,6 +79,11 @@ Class | Method | HTTP request | Description
  - [PointLocation](docs/PointLocation.md)
  - [PushIdBody](docs/PushIdBody.md)
  - [RefreshTokenResponse](docs/RefreshTokenResponse.md)
+ - [ReturnSenderNetwork](docs/ReturnSenderNetwork.md)
+ - [ReturnTicketEventLogNetwork](docs/ReturnTicketEventLogNetwork.md)
+ - [ReturnTicketNetwork](docs/ReturnTicketNetwork.md)
+ - [ReturnTicketOperationsNetwork](docs/ReturnTicketOperationsNetwork.md)
+ - [ReturnTicketsResponse](docs/ReturnTicketsResponse.md)
  - [SubscribeRequest](docs/SubscribeRequest.md)
  - [ValidationRequest](docs/ValidationRequest.md)
 

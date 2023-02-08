@@ -22,6 +22,9 @@ Method | HTTP request | Description
 [**V1ParcelShipmentNumberGet**](DefaultApi.md#V1ParcelShipmentNumberGet) | **Get** /v1/parcel/{shipmentNumber} | ParcelApi.oneParcel
 [**V1ParcelsGet**](DefaultApi.md#V1ParcelsGet) | **Get** /v1/parcels | ParcelApi.parcels
 [**V1PointsGet**](DefaultApi.md#V1PointsGet) | **Get** /v1/points | MapApi.pointsFor
+[**V1ReturnsTicketsGet**](DefaultApi.md#V1ReturnsTicketsGet) | **Get** /v1/returns/tickets | ReturnTicketApi.m4664a
+[**V1ReturnsTicketsPost**](DefaultApi.md#V1ReturnsTicketsPost) | **Post** /v1/returns/tickets | CreateTicketApi.m4707b
+[**V1ReturnsTicketsUuidGet**](DefaultApi.md#V1ReturnsTicketsUuidGet) | **Get** /v1/returns/tickets/{uuid} | ReturnTicketApi.m4663b
 [**V1SendSMSCodePhoneNumberGet**](DefaultApi.md#V1SendSMSCodePhoneNumberGet) | **Get** /v1/sendSMSCode/{phoneNumber} | RegistrationApi.sendSMSCode
 [**V2AgreementGet**](DefaultApi.md#V2AgreementGet) | **Get** /v2/agreement | AgreementApi.agreement
 [**V2AgreementPost**](DefaultApi.md#V2AgreementPost) | **Post** /v2/agreement | AgreementApi.agreement
@@ -555,6 +558,86 @@ Name | Type | Description  | Notes
 ### Authorization
 
 [bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **V1ReturnsTicketsGet**
+> ReturnTicketsResponse V1ReturnsTicketsGet(ctx, )
+ReturnTicketApi.m4664a
+
+### Required Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ReturnTicketsResponse**](ReturnTicketsResponse.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **V1ReturnsTicketsPost**
+> CreateTicketDetailsNetwork V1ReturnsTicketsPost(ctx, optional)
+CreateTicketApi.m4707b
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+ **optional** | ***DefaultApiV1ReturnsTicketsPostOpts** | optional parameters | nil if no parameters
+
+### Optional Parameters
+Optional parameters are passed through a pointer to a DefaultApiV1ReturnsTicketsPostOpts struct
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**optional.Interface of CreateOrganizationTicketRequest**](CreateOrganizationTicketRequest.md)|  | 
+
+### Return type
+
+[**CreateTicketDetailsNetwork**](CreateTicketDetailsNetwork.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **V1ReturnsTicketsUuidGet**
+> ReturnTicketNetwork V1ReturnsTicketsUuidGet(ctx, uuid)
+ReturnTicketApi.m4663b
+
+### Required Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+  **uuid** | **string**| ReturnTicketApi.m4663b.str | 
+
+### Return type
+
+[**ReturnTicketNetwork**](ReturnTicketNetwork.md)
+
+### Authorization
+
+No authorization required
 
 ### HTTP request headers
 

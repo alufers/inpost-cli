@@ -539,6 +539,58 @@ paths:
       security:
       - bearerAuth: []
       x-retrofit-interface: p024pl.inpost.inmobile.network.map.MapApi
+  /v1/returns/tickets:
+    get:
+      summary: ReturnTicketApi.m4664a
+      responses:
+        default:
+          description: |-
+            Response body type was declared as `/* renamed from: a */
+            Single<ReturnTicketsResponse>`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnTicketsResponse'
+      x-retrofit-interface: x50.ReturnTicketApi
+    post:
+      summary: CreateTicketApi.m4707b
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrganizationTicketRequest'
+      responses:
+        default:
+          description: |-
+            Response body type was declared as `/* renamed from: b */
+            Single<CreateTicketDetailsNetwork>`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateTicketDetailsNetwork'
+      x-retrofit-interface: x50.CreateTicketApi
+  /v1/returns/tickets/{uuid}:
+    get:
+      summary: ReturnTicketApi.m4663b
+      parameters:
+      - name: uuid
+        in: path
+        description: ReturnTicketApi.m4663b.str
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        default:
+          description: |-
+            Response body type was declared as `/* renamed from: b */
+            Single<ReturnTicketNetwork>`
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReturnTicketNetwork'
+      x-retrofit-interface: x50.ReturnTicketApi
 components:
   schemas:
     AgreementGrant:
@@ -1061,6 +1113,237 @@ components:
         side: side
         column: 0
         row: 6
+    ReturnTicketsResponse:
+      type: object
+      properties:
+        tickets:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReturnTicketNetwork'
+      example:
+        tickets:
+        - formType: formType
+          address: address
+          orderNumber: orderNumber
+          organizationName: organizationName
+          rma: rma
+          description: description
+          acceptedDate: 2000-01-23T04:56:07.000+00:00
+          uuid: uuid
+          deliveredDate: 2000-01-23T04:56:07.000+00:00
+          expiryDate: 2000-01-23T04:56:07.000+00:00
+          returnCode: returnCode
+          sentDate: 2000-01-23T04:56:07.000+00:00
+          createdDate: 2000-01-23T04:56:07.000+00:00
+          operations:
+            highlight: true
+            manualArchive: true
+            autoArchivableSince: 2000-01-23T04:56:07.000+00:00
+            refreshUntil: 2000-01-23T04:56:07.000+00:00
+            delete: true
+            send: true
+          qrCode: qrCode
+          returnReason: returnReason
+          eventLog:
+          - date: 2000-01-23T04:56:07.000+00:00
+            name: name
+            type: type
+          - date: 2000-01-23T04:56:07.000+00:00
+            name: name
+            type: type
+          parcelSize: parcelSize
+          shipmentNumber: shipmentNumber
+          status: status
+        - formType: formType
+          address: address
+          orderNumber: orderNumber
+          organizationName: organizationName
+          rma: rma
+          description: description
+          acceptedDate: 2000-01-23T04:56:07.000+00:00
+          uuid: uuid
+          deliveredDate: 2000-01-23T04:56:07.000+00:00
+          expiryDate: 2000-01-23T04:56:07.000+00:00
+          returnCode: returnCode
+          sentDate: 2000-01-23T04:56:07.000+00:00
+          createdDate: 2000-01-23T04:56:07.000+00:00
+          operations:
+            highlight: true
+            manualArchive: true
+            autoArchivableSince: 2000-01-23T04:56:07.000+00:00
+            refreshUntil: 2000-01-23T04:56:07.000+00:00
+            delete: true
+            send: true
+          qrCode: qrCode
+          returnReason: returnReason
+          eventLog:
+          - date: 2000-01-23T04:56:07.000+00:00
+            name: name
+            type: type
+          - date: 2000-01-23T04:56:07.000+00:00
+            name: name
+            type: type
+          parcelSize: parcelSize
+          shipmentNumber: shipmentNumber
+          status: status
+    ReturnTicketNetwork:
+      type: object
+      properties:
+        acceptedDate:
+          type: string
+          format: date-time
+        address:
+          type: string
+        createdDate:
+          type: string
+          format: date-time
+        deliveredDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        eventLog:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReturnTicketEventLogNetwork'
+        expiryDate:
+          type: string
+          format: date-time
+        formType:
+          type: string
+        operations:
+          $ref: '#/components/schemas/ReturnTicketOperationsNetwork'
+        orderNumber:
+          type: string
+        organizationName:
+          type: string
+        parcelSize:
+          type: string
+        qrCode:
+          type: string
+        returnCode:
+          type: string
+        returnReason:
+          type: string
+        rma:
+          type: string
+        sentDate:
+          type: string
+          format: date-time
+        shipmentNumber:
+          type: string
+        status:
+          type: string
+        uuid:
+          type: string
+      example:
+        formType: formType
+        address: address
+        orderNumber: orderNumber
+        organizationName: organizationName
+        rma: rma
+        description: description
+        acceptedDate: 2000-01-23T04:56:07.000+00:00
+        uuid: uuid
+        deliveredDate: 2000-01-23T04:56:07.000+00:00
+        expiryDate: 2000-01-23T04:56:07.000+00:00
+        returnCode: returnCode
+        sentDate: 2000-01-23T04:56:07.000+00:00
+        createdDate: 2000-01-23T04:56:07.000+00:00
+        operations:
+          highlight: true
+          manualArchive: true
+          autoArchivableSince: 2000-01-23T04:56:07.000+00:00
+          refreshUntil: 2000-01-23T04:56:07.000+00:00
+          delete: true
+          send: true
+        qrCode: qrCode
+        returnReason: returnReason
+        eventLog:
+        - date: 2000-01-23T04:56:07.000+00:00
+          name: name
+          type: type
+        - date: 2000-01-23T04:56:07.000+00:00
+          name: name
+          type: type
+        parcelSize: parcelSize
+        shipmentNumber: shipmentNumber
+        status: status
+    ReturnTicketOperationsNetwork:
+      type: object
+      properties:
+        autoArchivableSince:
+          type: string
+          format: date-time
+        delete:
+          type: boolean
+        highlight:
+          type: boolean
+        manualArchive:
+          type: boolean
+        refreshUntil:
+          type: string
+          format: date-time
+        send:
+          type: boolean
+      example:
+        highlight: true
+        manualArchive: true
+        autoArchivableSince: 2000-01-23T04:56:07.000+00:00
+        refreshUntil: 2000-01-23T04:56:07.000+00:00
+        delete: true
+        send: true
+    ReturnTicketEventLogNetwork:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date-time
+        name:
+          type: string
+        type:
+          type: string
+      example:
+        date: 2000-01-23T04:56:07.000+00:00
+        name: name
+        type: type
+    CreateOrganizationTicketRequest:
+      type: object
+      properties:
+        address:
+          type: string
+        description:
+          type: string
+        orderNumber:
+          type: string
+        organizationUuid:
+          type: string
+        parcelSize:
+          type: string
+        reasonUuid:
+          type: string
+        sender:
+          $ref: '#/components/schemas/ReturnSenderNetwork'
+    ReturnSenderNetwork:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+    CreateTicketDetailsNetwork:
+      type: object
+      properties:
+        accepted:
+          type: boolean
+        rma:
+          type: string
+        uuid:
+          type: string
+      example:
+        rma: rma
+        accepted: true
+        uuid: uuid
   securitySchemes:
     bearerAuth:
       type: http
